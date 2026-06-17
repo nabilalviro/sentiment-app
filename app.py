@@ -1,5 +1,6 @@
 import streamlit as st
 import pickle
+import pandas as pd
 
 st.set_page_config(page_title="Sentimen Review App", page_icon="🎯")
 
@@ -18,6 +19,14 @@ model, vectorizer = load_model()
 
 st.success("✅ Model siap digunakan!")
 
+# ── Tampilan Dataset ──
+st.header("📊 Sample Dataset")
+df = pd.read_csv("googleplaystore_user_reviews.csv")
+df = df.dropna(subset=['Translated_Review', 'Sentiment'])
+st.write(f"Total data: **{len(df)} baris**")
+st.dataframe(df[['Translated_Review', 'Sentiment']].head(5))
+
+# ── Prediksi ──
 st.header("🔍 Prediksi Sentimen")
 teks = st.text_area("Tulis review aplikasi di sini:", height=150)
 
